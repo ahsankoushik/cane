@@ -3,7 +3,7 @@ import time
 # import datetime
 from mutagen.mp3 import MP3
 from pygame import mixer
-import threading
+# import threading
 import os 
 
 
@@ -22,18 +22,25 @@ total_music = len(music_list)
 
 
 
-# Starting the mixer
-mixer.init()
 
-# Setting the volume
-mixer.music.set_volume(volume)
+# Starting the mixer
+
 # Start playing the song
 
 def play_for_once(path):
+    mixer.init()
+
+    # Setting the volume
+    mixer.music.set_volume(volume)
     mixer.music.load(path)
     mixer.music.play()
-    time.sleep(MP3(path).info.length)
+    # time.sleep(MP3(path).info.length)
+    time.sleep(3)
     mixer.music.unload()
+    mixer.stop()
+    mixer.quit()
+    print('once fucntion done')
+
 
 def play_maintain(mixer,count:int,step:int,total_music:int,music_list:list,music_dir:str):
     count = (count+step) % total_music
@@ -60,15 +67,21 @@ class MusicControl(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
-        self._stop_event = threading.Event()
+        # self._stop_event = threading.Event()
         self.start()
 
     def run(self):
+        print('thread started')
+        mixer.init()
+
+        # Setting the volume
+        
         global sleep_timer
         global paused 
         global volume
         global music_count
         # Loading the song
+        mixer.music.set_volume(volume)
         mixer.music.load(music_dir + music_list[music_count])
         sleep_timer = MP3(music_dir+music_list[music_count]).info.length
         
@@ -98,8 +111,10 @@ p -> play or pause
             elif query == 'm':
                 # Stop the mixer
                 mixer.music.stop()
+                mixer.quit()
                 global kill_all 
                 kill_all = 1
+                # mixer.quit()
                 break
             
             elif query == '>':
@@ -120,19 +135,13 @@ p -> play or pause
             
 
 
-    def stop(self):
-        self._stop_event.set()
-
-    def stopped(self):
-        return self._stop_event.is_set()
-
 
 
 class MusicEnd(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
-        self._stop_event = threading.Event()
+        # self._stop_event = threading.Event()
         self.start()
     def run(self):
         global sleep_timer
@@ -156,12 +165,6 @@ class MusicEnd(Thread):
                 break
 
 
-
-    def stop(self):
-        self._stop_event.set()
-
-    def stopped(self):
-        return self._stop_event.is_set()
 
 
 
