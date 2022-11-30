@@ -67,18 +67,25 @@ class MusicControl(Thread):
         mixer.music.play()
         paused = 0 
 
+
         while True:	
-            
+            print('''e -> exit music
+p -> play or pause
+> -> next song
+< -> prevous song
++ -> volume up
+- -> volume down''')
+
             query = input(" ")
             if query == 'p':
                 # Pausing the music
-                mixer.music.pause()	
-                paused = 1
-
-            elif query == 'r':
+                if not  paused:
+                    mixer.music.pause()	
+                    paused = 1
                 # Resuming the music
-                mixer.music.unpause()
-                paused = 0 
+                else:
+                    mixer.music.unpause()
+                    paused = 0 
 
             elif query == 'e':
                 # Stop the mixer

@@ -7,6 +7,7 @@ music = 0
 
 
 while True:
+    print('m for music')
     menu = input('enter a menu: ')
 
     if menu == 'm':

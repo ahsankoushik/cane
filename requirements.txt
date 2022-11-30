@@ -1,0 +1,2 @@
+mutagen==1.46.0
+pygame==2.1.2
