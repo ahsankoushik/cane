@@ -12,6 +12,7 @@ paused = 1
 volume = 0.7
 kill_all = 0
 play_time =0 
+sleep_timer = 0
 
 music_dir = f'/home/{os.getlogin()}/music/'
 music_list = os.listdir(music_dir)
@@ -23,12 +24,16 @@ total_music = len(music_list)
 
 # Starting the mixer
 mixer.init()
-# Loading the song
-mixer.music.load(music_dir + music_list[music_count])
-sleep_timer = MP3(music_dir+music_list[music_count]).info.length
+
 # Setting the volume
 mixer.music.set_volume(volume)
 # Start playing the song
+
+def play_for_once(path):
+    mixer.music.load(path)
+    mixer.music.play()
+    time.sleep(MP3(path).info.length)
+    mixer.music.unload()
 
 def play_maintain(mixer,count:int,step:int,total_music:int,music_list:list,music_dir:str):
     count = (count+step) % total_music
@@ -63,13 +68,16 @@ class MusicControl(Thread):
         global paused 
         global volume
         global music_count
+        # Loading the song
+        mixer.music.load(music_dir + music_list[music_count])
+        sleep_timer = MP3(music_dir+music_list[music_count]).info.length
         
         mixer.music.play()
         paused = 0 
 
 
         while True:	
-            print('''e -> exit music
+            print('''m -> change menu 
 p -> play or pause
 > -> next song
 < -> prevous song
@@ -87,7 +95,7 @@ p -> play or pause
                     mixer.music.unpause()
                     paused = 0 
 
-            elif query == 'e':
+            elif query == 'm':
                 # Stop the mixer
                 mixer.music.stop()
                 global kill_all 
@@ -130,6 +138,7 @@ class MusicEnd(Thread):
         global sleep_timer
         global paused
         global play_time
+        global kill_all
         # print(x,sleep_timer)
         while True:
             
@@ -143,6 +152,8 @@ class MusicEnd(Thread):
                 play_time = 0
                 time.sleep(2)
             time.sleep(1)
+            if kill_all:
+                break
 
 
 
@@ -152,7 +163,9 @@ class MusicEnd(Thread):
     def stopped(self):
         return self._stop_event.is_set()
 
-                    
+
+
+
 if __name__ == '__main__':
 
     MusicControl()
