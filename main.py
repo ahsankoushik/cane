@@ -35,6 +35,7 @@ while True:
             pass
         del a
         del b
+
     
     elif menu == 1:
         print(menu,'walking')

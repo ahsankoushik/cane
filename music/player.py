@@ -14,8 +14,8 @@ kill_all = 0
 play_time =0 
 sleep_timer = 0
 
-music_dir = f'/home/{os.getlogin()}/music/'
-music_list = os.listdir(music_dir)
+music_dir = f'{os.getcwd()}/musics/'
+music_list =sorted([x for x in os.listdir(music_dir) if x.split('.')[1]=='mp3'])
 print(music_list)
 music_count = 0
 total_music = len(music_list)
@@ -28,14 +28,14 @@ total_music = len(music_list)
 # Start playing the song
 
 def play_for_once(path):
-    mixer.init()
+    mixer.init(22050)
 
     # Setting the volume
     mixer.music.set_volume(volume)
     mixer.music.load(path)
     mixer.music.play()
-    # time.sleep(MP3(path).info.length)
-    time.sleep(3)
+    time.sleep(MP3(path).info.length)
+    # time.sleep(3)
     mixer.music.unload()
     mixer.stop()
     mixer.quit()
@@ -72,7 +72,7 @@ class MusicControl(Thread):
 
     def run(self):
         print('thread started')
-        mixer.init()
+        mixer.init(22050)
 
         # Setting the volume
         

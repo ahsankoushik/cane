@@ -3,10 +3,13 @@ import pyttsx3
 
 engine = pyttsx3.init()
 
-# voices = engine.getProperty('voices')
+voices = engine.getProperty('voices')
 
-engine.setProperty('voice','bengali')
-engine.setProperty('rate',150)
+for x in voices:
+    print(x)
+
+# engine.setProperty('voice','bengali')
+# engine.setProperty('rate',150)
 
 
 def speak(s:str):
@@ -18,5 +21,5 @@ def save(s,path):
     engine.runAndWait()
     
 
-
+speak('hey this is kanak')
 
