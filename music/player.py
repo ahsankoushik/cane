@@ -39,7 +39,7 @@ def play_for_once(path):
     mixer.music.unload()
     mixer.stop()
     mixer.quit()
-    print('once fucntion done')
+    # print('once fucntion done')
 
 
 def play_maintain(mixer,count:int,step:int,total_music:int,music_list:list,music_dir:str):

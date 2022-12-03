@@ -68,8 +68,9 @@ while True:
         print(menu, 'detection')
         # player.play_for_once('/voice_command/commands/image_detection.mp3')
         player.play_for_once(os.getcwd()+'/voice_command/commads/image_detection.mp3')
-        take_photo.capture_write('first.jpg')
-        image_text = image_read('first.jpg')
+        # take_photo.capture_write('first.jpg')
+        image_text = image_read.extract_text('first.jpg')
+        print(image_read)
         os.system(f'espeak -s 130 -g 11   "{image_text}" 2>/dev/null')
 
 

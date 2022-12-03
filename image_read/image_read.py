@@ -8,4 +8,4 @@ def extract_text(path):
 
 if __name__ == '__main__':
     with open('temp/t.txt','a') as f:
-        f.write(extract_text('images/k.png'))
+        f.write(extract_text('first.jpg'))
