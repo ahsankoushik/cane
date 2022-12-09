@@ -1,7 +1,7 @@
 
 from music import player
 from location import location
-# from voice_command import voice
+from voice_command import voice
 from image_read import take_photo
 from image_read import image_read
 import time
@@ -44,8 +44,11 @@ while True:
     elif menu == 1:
         print(menu,'walking')
         player.play_for_once(os.getcwd()+'/voice_command/commads/walking_mode.mp3')
+
+        voice.speak(location.address())
+
         # engine.save_to_file(location.address,'location.mp3')
-        os.system(f'espeak -s 130 -g 11   "{location.address}" 2>/dev/null')
+        
         # player.play_for_once('location.mp3')
         
 
@@ -57,26 +60,21 @@ while True:
     
     elif menu == 2:
         print(menu,'image read')
+        # take_photo.capture_write('first.jpg')
         player.play_for_once(os.getcwd()+'/voice_command/commads/image_read.mp3')
-        
+        image_text = image_read.extract_text('first.jpg')
+        print(image_text)
+        voice.speak(image_text)
 
-        # voice.speak('image read mode')
-        # time.sleep(2)
         if next: next = False
 
     elif menu == 3: 
         print(menu, 'detection')
-        # player.play_for_once('/voice_command/commands/image_detection.mp3')
         player.play_for_once(os.getcwd()+'/voice_command/commads/image_detection.mp3')
-        # take_photo.capture_write('first.jpg')
-        image_text = image_read.extract_text('first.jpg')
-        print(image_read)
-        os.system(f'espeak -s 130 -g 11   "{image_text}" 2>/dev/null')
-
 
         
 
-        # time.sleep(2)
+
+
         if next: next = False
     
-
