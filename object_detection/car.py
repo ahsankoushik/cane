@@ -30,7 +30,7 @@ while True:
     
     # To draw a rectangle in each cars
     for (x,y,w,h) in cars:
-        cv2.rectangle(frames,(x,y),(x+w,y+h),(0,0,255),2)
+        cv2.rectangle(frames,(x,y),(x+w,y+h),(0,0,255),1.5)
         print(cars)
 
     # Display frames in a window
